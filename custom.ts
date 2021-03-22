@@ -142,14 +142,14 @@ namespace IP_NETWORK {
 
          
     /**
-     * TODO:外部から自分の機器にメッセージ：$messageを受け取ったら、このブロック内のプログラムを実行
+     * TODO:外部から自分の機器にメッセージ：$messageを受け取ったら、この中のプログラムを実行
    　
      */
     //%weight=90
     //% group="LAN"
     //% message.defl=receivedtext
     //% draggableParameters="reporter"
-    //% block="外部から自分の機器にメッセージ：$messageを受け取ったら、このブロック内のプログラムを実行"
+    //% block="外部から自分の機器にメッセージ：$messageを受け取ったら、この中のプログラムを実行"
     export function onreceived(handler:(message:string)=> void){
         onxHandler = handler
       
@@ -339,7 +339,7 @@ export function　rep(t : string ="OK"):void{
 
     }
       /**
-     * TODO:192.168.0.Xに登録されたデータを要求
+     * TODO:192.168.0.Xに登録されたデータを問い合わせる
    　
      */
     //%weight=50
@@ -566,11 +566,11 @@ export function　rep(t : string ="OK"):void{
         
     }
       /**
-     * TODO:外部機器から自分の機器にデータのリクエストがあったら、このブロック内に登録されているデータを自動返信
+     * TODO:このブロック内に登録されているデータを自動返信する
      */
     //%weight=100
     //% group="LAN&SERVER"
-    //% block="外部機器から自分の機器にデータのリクエストがあったら、このブロック内に登録されているデータを自動返信"
+    //% block="このブロック内に登録されているデータを自動返信する"
     export function iot(handler:()=>void){
         initHandler = handler
  
@@ -612,7 +612,7 @@ export function　rep(t : string ="OK"):void{
      */
     //%weight=50
     //% group="SERVER"
-    //% block="通信のグループ番号内でメッセージのやり取りがあったら、このブロック内のプログラムを実行"
+    //% block="メッセージがサーバーを経由したらこの中のプログラムを実行する。"
     
     export function onserver(handler:()=>void){
          onxHandler = handler;
