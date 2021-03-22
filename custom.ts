@@ -149,18 +149,18 @@ namespace IP_NETWORK {
     //% group="LAN"
     //% message.defl=receivedtext
     //% draggableParameters="reporter"
-    //% block="外部から自分の機器にメッセージ：$messageを受け取ったら、この中のプログラムを実行"
+    //% block="外部からこの機器宛にメッセージ：$messageを受け取ったら、この中のプログラムを実行"
     export function onreceived(handler:(message:string)=> void){
         onxHandler = handler
       
     }
     /**
-     * TODO:最後にメッセージをくれた外部機器(IPアドレス)にメッセージ「$t」を送信する
+     * TODO:最後にメッセージをくれたIPアドレスにメッセージ「$t」を送信する
    　
      */
     //%weight=89
     //% group="LAN"
-    //% block="最後にメッセージを送ってきた外部機機器番号(IPアドレス)にメッセージ「$t」を送信する"
+    //% block="最後にメッセージを送ってきた相手のIPアドレス宛にメッセージ「$t」を送信する"
 
 export function　rep(t : string ="OK"):void{
     let toip = 　parseInt( receivedfromip)
@@ -181,7 +181,7 @@ export function　rep(t : string ="OK"):void{
      */
     //%weight=90
     //% group="LAN"
-    //% block="自分の機器番号(IPアドレス)をLEDディスプレイに表示する"
+    //% block="自分のIPアドレスをLEDディスプレイに表示する"
     export function myip():void{
         if(myipaddress < 10){basic.showNumber(myipaddress)
 
@@ -347,7 +347,7 @@ export function　rep(t : string ="OK"):void{
     //% DATA.defl=receivedtext
     //% s.defl=1 s.min=1 s.max=19
     //% draggableParameters="reporter"
-     //% block="外部機器番号(IPアドレス)「$s」に登録されている「$n」番目のデータをリクエスト"
+     //% block="相手のIPアドレス「$s」に登録されている「$n」番目のデータをリクエスト"
     export function askdataip(n:lis,s:number):void　{ 
         radio.sendValue("name", s)
         makestring =""+ convertToText(myipaddress)+"REQUESTDATA:"+""+ convertToText(n);
@@ -373,7 +373,7 @@ export function　rep(t : string ="OK"):void{
      */
     //%weight=75
     //% group="LAN"
-    //% block="受信した相手の機器番号の（IPアドレス)"
+    //% block="受信した相手のIPアドレス"
     export function receivedip():string　{ 
         let fromip = ""
         fromip = receivedfromip
@@ -388,7 +388,7 @@ export function　rep(t : string ="OK"):void{
      */
     //%weight=80
     //% group="LAN"
-    //% block="相手の機器番号（IPアドレス）「$n」にメッセージ 「$y」を送信"
+    //% block="相手のIPアドレス「$n」にメッセージ 「$y」を送信"
     //% n.min=1 n.max=99 n.defl=2
     export function sendmessege(n:number,y:string ):void{
         radio.sendValue("name", n)
@@ -631,7 +631,7 @@ export function　rep(t : string ="OK"):void{
         let receivedmessage:string;
 
        
-        receivedmessage = ".........."+""+receivedfromip+" to "+".........."+""+convertToText(receivedtoip)+" "+""+receivedtext;
+        receivedmessage =　""+receivedfromip+" to "+""+convertToText(receivedtoip)+" "+""+receivedtext;
 
         return receivedmessage;
         
