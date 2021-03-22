@@ -349,7 +349,7 @@ export function　rep(t : string ="OK"):void{
     //% draggableParameters="reporter"
      //% block="外部機器番号(IPアドレス)「$s」に登録されている「$n」番目のデータをリクエスト"
     export function askdataip(n:lis,s:number):void　{ 
-        radio.sendNumber(s)
+        radio.sendValue("name", s)
         makestring =""+ convertToText(myipaddress)+"REQUESTDATA:"+""+ convertToText(n);
         basic.pause(5)
         radio.sendString(makestring)
@@ -391,7 +391,7 @@ export function　rep(t : string ="OK"):void{
     //% block="相手の機器番号（IPアドレス）「$n」にメッセージ 「$y」を送信"
     //% n.min=1 n.max=99 n.defl=2
     export function sendmessege(n:number,y:string ):void{
-        radio.sendNumber(n)
+        radio.sendValue("name", n)
 
         makestring =""+ convertToText(myipaddress)+""+y ;
         
@@ -612,7 +612,7 @@ export function　rep(t : string ="OK"):void{
      */
     //%weight=50
     //% group="SERVER"
-    //% block="通信のグループ番号内でメッセージのやり取りがあったら、このブロック内プログラムを実行"
+    //% block="通信のグループ番号内でメッセージのやり取りがあったら、このブロック内のプログラムを実行"
     
     export function onserver(handler:()=>void){
          onxHandler = handler;
