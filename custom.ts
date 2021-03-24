@@ -155,7 +155,7 @@ namespace IP_NETWORK {
       
     }
     /**
-     * TODO:最後にメッセージをくれたIPアドレスにメッセージ「$t」を送信する
+     * TODO:最後にメッセージをくれたIPアドレス宛にメッセージ「$t」を送信する
    　
      */
     //%weight=89
@@ -165,7 +165,7 @@ namespace IP_NETWORK {
 export function　rep(t : string ="OK"):void{
     let toip = 　parseInt( receivedfromip)
     radio.sendValue("name", toip)
-    basic.pause(5)
+    basic.pause(100)
     makestring =""+ convertToText(myipaddress)+""+t ;
     radio.sendString(makestring)
         
@@ -176,7 +176,7 @@ export function　rep(t : string ="OK"):void{
 
 
      /**
-     * TODO:自分の機器番号(IPアドレス)をLEDディスプレイに表示する
+     * TODO:自分のIPアドレスをLEDディスプレイに表示する
    　
      */
     //%weight=90
@@ -388,12 +388,13 @@ export function　rep(t : string ="OK"):void{
      */
     //%weight=80
     //% group="LAN"
-    //% block="相手のIPアドレス「$n」にメッセージ 「$y」を送信"
+    //% block="相手のIPアドレス「$n」へメッセージ 「$y」を送信"
     //% n.min=1 n.max=99 n.defl=2
     export function sendmessege(n:number,y:string ):void{
         radio.sendValue("name", n)
 
         makestring =""+ convertToText(myipaddress)+""+y ;
+        basic.pause(100)
         
         radio.sendString(makestring)    
     }
@@ -505,7 +506,9 @@ export function　rep(t : string ="OK"):void{
         radio.onReceivedString(function (receivedString: string) {
             initHandler(1)
             let tempstr = receivedString
+          
             if (setgflags == 1){
+                radio.sendString(tempstr)
                 let data = 0
                
                 if(targetvalue == 1){
@@ -612,7 +615,7 @@ export function　rep(t : string ="OK"):void{
      */
     //%weight=50
     //% group="SERVER"
-    //% block="メッセージがサーバーを経由したらこの中のプログラムを実行する。"
+    //% block="メッセージをサーバー経由で送信したらこの中のプログラムを実行する。"
     
     export function onserver(handler:()=>void){
          onxHandler = handler;
@@ -626,7 +629,7 @@ export function　rep(t : string ="OK"):void{
      */
     //%weight=40
     //% group="SERVER"
-    //% block="（送信元IPアドレス to 宛先IPアドレス+メッセージの内容"
+    //% block="処理した「送信元IPアドレス」 と 「宛先IPアドレス」 + メッセージ　の内容の文字列"
     export function  receivedmessage():string　{ 
         let receivedmessage:string;
 
@@ -646,7 +649,7 @@ export function　rep(t : string ="OK"):void{
      */
     //%weight=40
     //% group="SERVER"
-    //% block="サーバー機器を経由したメッセージと、その機器番号(IPアドレス)をシリアル通信で出力"
+    //% block="サーバーを経由したメッセージと、そのIPアドレスをシリアル通信でモニタリングする"
     export function  messagetoserial():void　{ 
        let receivedmessage:string;
        receivedmessage = "|===.........."+""+receivedfromip+"===|===.........."+""+convertToText(receivedtoip)+"==|"+"==="+""+receivedtext+"===|";
