@@ -28,8 +28,8 @@ enum lis{
 }
 
 
-//% weight=100 color=#0fbc11 icon="\uf1eb" block="ネットワーク"
-//% groups="['LAN', 'SERVER','LAN&SERVER']"
+//% weight=100 color=#0fbc11 icon="\uf1eb" block="サーバー＆クライアント"
+//% groups="['CLIENT', 'SERVER','SERVER_DATA']"
 namespace IP_NETWORK {
  
     let receivedtoip = 0
@@ -58,7 +58,7 @@ namespace IP_NETWORK {
    setinit2(function(){})
    //%block="通信を行うグループ番号を「$n」にする"
     //%weight=100
-    //% group="LAN"
+    //% group="CLIENT"
     //% n.min=1 n.max=99 n.defl=1
 
      /**
@@ -75,7 +75,7 @@ namespace IP_NETWORK {
 
     //%block="自分のIPアドレスを「$x」に設定する"
     //%weight=95
-    //% group="LAN"
+    //% group="CLIENT"
    
     //% x.min=1 x.max=19 x.defl=1   
      /**
@@ -146,7 +146,7 @@ namespace IP_NETWORK {
    　
      */
     //%weight=90
-    //% group="LAN"
+    //% group="CLIENT"
     //% message.defl=receivedtext
     //% draggableParameters="reporter"
     //% block="外部からこの機器宛にメッセージ：$messageを受け取ったら、この中のプログラムを実行"
@@ -159,7 +159,7 @@ namespace IP_NETWORK {
    　
      */
     //%weight=89
-    //% group="LAN"
+    //% group="CLIENT"
     //% block="最後にメッセージを送ってきた相手のIPアドレス宛にメッセージ「$t」を送信する"
 
 export function　rep(t : string ="OK"):void{
@@ -180,7 +180,7 @@ export function　rep(t : string ="OK"):void{
    　
      */
     //%weight=90
-    //% group="LAN"
+    //% group="CLIENT"
     //% block="自分のIPアドレスをLEDディスプレイに表示する"
     export function myip():void{
         if(myipaddress < 10){basic.showNumber(myipaddress)
@@ -299,10 +299,10 @@ export function　rep(t : string ="OK"):void{
    　
      */
     //%weight=80
-    //% group="LAN"
+    //% group="CLIENT"
     //% block="最後に受信したメッセージ"
-    export function receivedstring():string　{ 
-        let receivedstring:string
+    function receivedstring():string　{ 
+       let receivedstring:string
         receivedstring = receivedtext
         return receivedstring
 
@@ -317,7 +317,7 @@ export function　rep(t : string ="OK"):void{
    　
      */
     //%weight=60
-    //% group="LAN"
+    //% group="CLIENT"
     //% DATA.defl=receivedtext
     //% draggableParameters="reporter"
      //% block="サーバーに登録されている「$n」番目のデータをリクエスト"
@@ -339,16 +339,17 @@ export function　rep(t : string ="OK"):void{
 
     }
       /**
-     * TODO:192.168.0.Xに登録されたデータを問い合わせる
+     * TODO:Xに登録されたデータを問い合わせる
    　
      */
     //%weight=50
-    //% group="LAN"
+    //% group="CLIENT"
     //% DATA.defl=receivedtext
     //% s.defl=1 s.min=1 s.max=19
     //% draggableParameters="reporter"
      //% block="相手のIPアドレス「$s」に登録されている「$n」番目のデータをリクエスト"
-    export function askdataip(n:lis,s:number):void　{ 
+    
+       function askdataip(n:lis,s:number):void　{ 
         radio.sendValue("name", s)
         makestring =""+ convertToText(myipaddress)+"REQUESTDATA:"+""+ convertToText(n);
         basic.pause(5)
@@ -365,6 +366,7 @@ export function　rep(t : string ="OK"):void{
 
 
     }
+    
 
 
      /**
@@ -372,7 +374,7 @@ export function　rep(t : string ="OK"):void{
    　
      */
     //%weight=75
-    //% group="LAN"
+    //% group="CLIENT"
     //% block="受信した相手のIPアドレス"
     export function receivedip():string　{ 
         let fromip = ""
@@ -387,7 +389,7 @@ export function　rep(t : string ="OK"):void{
    　
      */
     //%weight=80
-    //% group="LAN"
+    //% group="CLIENT"
     //% block="相手のIPアドレス「$n」へメッセージ 「$y」を送信"
     //% n.min=1 n.max=99 n.defl=2
     export function sendmessege(n:number,y:string ):void{
@@ -508,7 +510,8 @@ export function　rep(t : string ="OK"):void{
             let tempstr = receivedString
           
             if (setgflags == 1){
-                radio.sendString(tempstr)
+                
+                
                 let data = 0
                
                 if(targetvalue == 1){
@@ -572,7 +575,7 @@ export function　rep(t : string ="OK"):void{
      * TODO:このブロック内に登録されているデータを自動返信する
      */
     //%weight=100
-    //% group="LAN&SERVER"
+    //% group="SERVER_DATA"
     //% block="このブロック内に登録されているデータを自動返信する"
     export function iot(handler:()=>void){
         initHandler = handler
@@ -582,7 +585,7 @@ export function　rep(t : string ="OK"):void{
      * TODO:自動返信用の数字データ$mを$n番目の記憶場所に置く
      */
     //%weight=80
-    //% group="LAN&SERVER"
+    //% group="SERVER_DATA"
     //% block="自動返信用の数字データ$mを$n番目の記憶場所に置く"
     export function  setdata(n:lis,m:number){
         list[n] = convertToText(m)
@@ -595,7 +598,7 @@ export function　rep(t : string ="OK"):void{
      * TODO:番号と対応するメッセージを登録　
      */
     //%weight=90
-    //% group="LAN&SERVER"
+    //% group="SERVER_DATA"
     //% block=" 自動返信用のメッセージデータ$sを$n番目の記憶場所に置く"
     export function  setdatastr(n:lis,s:string){
         list[n] = s
@@ -615,7 +618,7 @@ export function　rep(t : string ="OK"):void{
      */
     //%weight=50
     //% group="SERVER"
-    //% block="メッセージをサーバー経由で送信したらこの中のプログラムを実行する。"
+    //% block="メッセージがサーバーを経由したらこの中のプログラムを実行する。"
     
     export function onserver(handler:()=>void){
          onxHandler = handler;
