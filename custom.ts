@@ -165,7 +165,7 @@ namespace IP_NETWORK {
 export function　rep(t : string ="OK"):void{
     let toip = 　parseInt( receivedfromip)
     radio.sendValue("name", toip)
-    basic.pause(100)
+    basic.pause(25)
     makestring =""+ convertToText(myipaddress)+""+t ;
     radio.sendString(makestring)
         
@@ -394,7 +394,7 @@ export function　rep(t : string ="OK"):void{
         radio.sendValue("name", n)
 
         makestring =""+ convertToText(myipaddress)+""+y ;
-        basic.pause(100)
+        basic.pause(25)
         
         radio.sendString(makestring)    
     }
